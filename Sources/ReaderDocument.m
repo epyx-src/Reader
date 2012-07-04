@@ -191,25 +191,33 @@
 
 	if (filePath != nil) // Must have a file path
 	{
-		const char *path = [filePath fileSystemRepresentation];
+        if ( [[filePath pathExtension] isEqualToString:@"pdf"] )
+        {
+            const char *path = [filePath fileSystemRepresentation];
 
-		int fd = open(path, O_RDONLY); // Open the file
+            int fd = open(path, O_RDONLY); // Open the file
 
-		if (fd > 0) // We have a valid file descriptor
-		{
-			const unsigned char sig[4]; // File signature
+            if (fd > 0) // We have a valid file descriptor
+            {
+                const unsigned char sig[4]; // File signature
 
-			ssize_t len = read(fd, (void *)&sig, sizeof(sig));
+                ssize_t len = read(fd, (void *)&sig, sizeof(sig));
 
-			if (len == 4)
-				if (sig[0] == '%')
-					if (sig[1] == 'P')
-						if (sig[2] == 'D')
-							if (sig[3] == 'F')
-								state = YES;
+                if (len == 4)
+                    if (sig[0] == '%')
+                        if (sig[1] == 'P')
+                            if (sig[2] == 'D')
+                                if (sig[3] == 'F')
+                                    state = YES;
 
-			close(fd); // Close the file
-		}
+                close(fd); // Close the file
+            }
+        }
+        // If file extension is not 'pdf', let's assume it's a pdf without opening the file.
+        // This is a workaround to be able to read files with a custom CGDataProvider (for instance an encrypted file).
+        else {
+            state = YES;
+        }
 	}
 
 	return state;

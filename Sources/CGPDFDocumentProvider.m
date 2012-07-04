@@ -8,6 +8,16 @@
 
 #import "CGPDFDocumentProvider.h"
 
-@implementation CGPDFDocumentProvider
+@implementation DefaultCGPDFDocumentProvider
+
+- (NSString *)extension
+{
+    return @"pdf";
+}
+
+- (CGDataProviderRef)newCGDataProviderWithURL:(NSURL *)docUrl
+{
+    return CGDataProviderCreateWithURL( (CFURLRef)docUrl );
+}
 
 @end

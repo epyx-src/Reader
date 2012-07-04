@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CGPDFDocumentProvider : NSObject
+@protocol CGPDFDocumentProvider
+
+- (NSString *)extension;
+
+- (CGDataProviderRef)newCGDataProviderWithURL:(NSURL *)docUrl;
+
+@end
+
+@interface DefaultCGPDFDocumentProvider : NSObject <CGPDFDocumentProvider>
 
 @end

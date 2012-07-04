@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CGPDFDocumentProvider.h"
 
 @interface CGPDFDocumentCenter : NSObject
+
++ (CGPDFDocumentCenter *)sharedCenter;
+
+- (void)registerProvider:(id<CGPDFDocumentProvider>)provider forExtension:(NSString *)extension;
+
+- (id<CGPDFDocumentProvider>)getProviderForExtension:(NSString *)extension;
+
+- (id<CGPDFDocumentProvider>)getDefaultProvider;
 
 @end

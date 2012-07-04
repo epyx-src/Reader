@@ -24,6 +24,8 @@
 //
 
 #import "CGPDFDocument.h"
+#import "CGPDFDocumentCenter.h"
+#import "CGPDFDocumentProvider.h"
 
 //
 //	CGPDFDocumentRef CGPDFDocumentCreateX(CFURLRef, NSString *) function
@@ -39,7 +41,18 @@ CGPDFDocumentRef CGPDFDocumentCreateX(CFURLRef theURL, NSString *password)
 
 	if (theURL != NULL) // Check for non-NULL CFURLRef
 	{
-		thePDFDocRef = CGPDFDocumentCreateWithURL(theURL);
+        NSString *extension = [(NSURL *)theURL pathExtension];
+        CGDataProviderRef dataProvider = NULL;
+
+        id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:extension];
+        if ( docProvider == nil ) {
+            // Unable to find the provider for the specified extension. Let's use the default one.
+            NSLog( @"CGPDFDocumentCreateX: Unable to find the CGPDFDocumentProvider for extension ['%@']", extension );
+            docProvider = [[CGPDFDocumentCenter sharedCenter] getDefaultProvider];
+        }
+        dataProvider = [docProvider newCGDataProviderWithURL:(NSURL *)theURL];
+
+        thePDFDocRef = CGPDFDocumentCreateWithProvider( dataProvider );
 
 		if (thePDFDocRef != NULL) // Check for non-NULL CGPDFDocumentRef
 		{
@@ -72,6 +85,7 @@ CGPDFDocumentRef CGPDFDocumentCreateX(CFURLRef theURL, NSString *password)
 				}
 			}
 		}
+        CGDataProviderRelease( dataProvider );
 	}
 	else // Log an error diagnostic
 	{
@@ -80,6 +94,60 @@ CGPDFDocumentRef CGPDFDocumentCreateX(CFURLRef theURL, NSString *password)
 		#endif
 	}
 
+	return thePDFDocRef;
+}
+
+CGPDFDocumentRef _CGPDFDocumentCreateX(CFURLRef theURL, NSString *password)
+{
+#ifdef DEBUGX
+	NSLog(@"%s", __FUNCTION__);
+#endif
+    
+	CGPDFDocumentRef thePDFDocRef = NULL;
+    
+	if (theURL != NULL) // Check for non-NULL CFURLRef
+	{
+		thePDFDocRef = CGPDFDocumentCreateWithURL(theURL);
+        
+		if (thePDFDocRef != NULL) // Check for non-NULL CGPDFDocumentRef
+		{
+			if (CGPDFDocumentIsEncrypted(thePDFDocRef) == TRUE) // Encrypted
+			{
+				// Try a blank password first, per Apple's Quartz PDF example
+                
+				if (CGPDFDocumentUnlockWithPassword(thePDFDocRef, "") == FALSE)
+				{
+					// Nope, now let's try the provided password to unlock the PDF
+                    
+					if ((password != nil) && ([password length] > 0)) // Not blank?
+					{
+						char text[128]; // char array buffer for the string conversion
+                        
+						[password getCString:text maxLength:126 encoding:NSUTF8StringEncoding];
+                        
+						if (CGPDFDocumentUnlockWithPassword(thePDFDocRef, text) == FALSE) // Log failure
+						{
+#ifdef DEBUG
+                            NSLog(@"CGPDFDocumentCreateX: Unable to unlock [%@] with [%@]", theURL, password);
+#endif
+						}
+					}
+				}
+                
+				if (CGPDFDocumentIsUnlocked(thePDFDocRef) == FALSE) // Cleanup unlock failure
+				{
+					CGPDFDocumentRelease(thePDFDocRef), thePDFDocRef = NULL;
+				}
+			}
+		}
+	}
+	else // Log an error diagnostic
+	{
+#ifdef DEBUG
+        NSLog(@"CGPDFDocumentCreateX: theURL == NULL");
+#endif
+	}
+    
 	return thePDFDocRef;
 }
 
