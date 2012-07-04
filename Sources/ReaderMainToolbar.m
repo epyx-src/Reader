@@ -120,7 +120,9 @@
 
 #endif // end of READER_ENABLE_THUMBS Option
 
+#if (READER_BOOKMARKS == TRUE) || (READER_ENABLE_MAIL == TRUE) || (READER_ENABLE_PRINT == TRUE)
 		CGFloat rightButtonX = viewWidth; // Right button start X position
+#endif
 
 #if (READER_BOOKMARKS == TRUE) // Option
 
