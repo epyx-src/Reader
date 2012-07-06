@@ -41,16 +41,11 @@ CGPDFDocumentRef CGPDFDocumentCreateX(CFURLRef theURL, NSString *password)
 
 	if (theURL != NULL) // Check for non-NULL CFURLRef
 	{
-        NSString *extension = [(NSURL *)theURL pathExtension];
+        NSString *pdfExtension = [(NSURL *)theURL pathExtension];
         CGDataProviderRef dataProvider = NULL;
 
-        id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:extension];
-        if ( docProvider == nil ) {
-            // Unable to find the provider for the specified extension. Let's use the default one.
-            NSLog( @"CGPDFDocumentCreateX: Unable to find the CGPDFDocumentProvider for extension ['%@']", extension );
-            docProvider = [[CGPDFDocumentCenter sharedCenter] getDefaultProvider];
-        }
-        dataProvider = [docProvider newCGDataProviderWithURL:(NSURL *)theURL];
+        id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:pdfExtension];
+        dataProvider = [docProvider newCGPDFDataProviderWithURL:(NSURL *)theURL];
 
         thePDFDocRef = CGPDFDocumentCreateWithProvider( dataProvider );
 

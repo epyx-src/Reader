@@ -10,9 +10,12 @@
 
 @protocol CGPDFDocumentProvider
 
-- (NSString *)extension;
+- (NSString *)pdfExtension;
+- (NSString *)tumbExtension;
 
-- (CGDataProviderRef)newCGDataProviderWithURL:(NSURL *)docUrl;
+- (CGDataProviderRef)newCGPDFDataProviderWithURL:(NSURL *)url;
+- (CGDataProviderRef)newCGThumbDataProviderWithURL:(NSURL *)url;
+- (CGDataConsumerRef)newCGThumbDataConsumerWithURL:(NSURL *)url;
 
 @end
 

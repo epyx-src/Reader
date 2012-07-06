@@ -41,6 +41,8 @@
 
 	NSString *_thumbName;
 
+	NSString *_thumbExtension;
+
 	ReaderThumbView *_thumbView;
 
 	NSUInteger _targetTag;
@@ -57,6 +59,7 @@
 @property (nonatomic, retain, readonly) NSString *password;
 @property (nonatomic, retain, readonly) NSString *cacheKey;
 @property (nonatomic, retain, readonly) NSString *thumbName;
+@property (nonatomic, retain, readonly) NSString *thumbExtension;
 @property (nonatomic, retain, readonly) ReaderThumbView *thumbView;
 @property (nonatomic, assign, readonly) NSUInteger targetTag;
 @property (nonatomic, assign, readonly) NSInteger thumbPage;

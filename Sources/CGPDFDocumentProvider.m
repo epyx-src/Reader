@@ -10,14 +10,29 @@
 
 @implementation DefaultCGPDFDocumentProvider
 
-- (NSString *)extension
+- (NSString *)pdfExtension
 {
     return @"pdf";
 }
 
-- (CGDataProviderRef)newCGDataProviderWithURL:(NSURL *)docUrl
+- (NSString *)tumbExtension
 {
-    return CGDataProviderCreateWithURL( (CFURLRef)docUrl );
+    return @"png";
+}
+
+- (CGDataProviderRef)newCGPDFDataProviderWithURL:(NSURL *)url;
+{
+    return CGDataProviderCreateWithURL( (CFURLRef)url );
+}
+
+- (CGDataProviderRef)newCGThumbDataProviderWithURL:(NSURL *)url
+{
+    return CGDataProviderCreateWithURL( (CFURLRef)url );
+}
+
+- (CGDataConsumerRef)newCGThumbDataConsumerWithURL:(NSURL *)url
+{
+    return CGDataConsumerCreateWithURL( (CFURLRef)url );
 }
 
 @end

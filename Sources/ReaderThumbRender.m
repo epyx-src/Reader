@@ -27,6 +27,8 @@
 #import "ReaderThumbCache.h"
 #import "ReaderThumbView.h"
 #import "CGPDFDocument.h"
+#import "CGPDFDocumentCenter.h"
+#import "CGPDFDocumentProvider.h"
 
 #import <ImageIO/ImageIO.h>
 
@@ -88,7 +90,7 @@
 
 	[fileManager createDirectoryAtPath:cachePath withIntermediateDirectories:NO attributes:nil error:NULL];
 
-	NSString *fileName = [NSString stringWithFormat:@"%@.png", request.thumbName]; // Thumb file name
+	NSString *fileName = [NSString stringWithFormat:@"%@.%@", request.thumbName, request.thumbExtension]; // Thumb file name
 
 	return [NSURL fileURLWithPath:[cachePath stringByAppendingPathComponent:fileName]]; // File URL
 }
@@ -208,7 +210,11 @@
 
 		CFURLRef thumbURL = (CFURLRef)[self thumbFileURL]; // Thumb cache path with PNG file name URL
 
-		CGImageDestinationRef thumbRef = CGImageDestinationCreateWithURL(thumbURL, (CFStringRef)@"public.png", 1, NULL);
+        NSString *pdfExtension = [(NSURL *)fileURL pathExtension];
+        id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:pdfExtension];
+        CGDataConsumerRef consumer = [docProvider newCGThumbDataConsumerWithURL:(NSURL *)thumbURL];
+
+		CGImageDestinationRef thumbRef = CGImageDestinationCreateWithDataConsumer(consumer, (CFStringRef)@"public.png", 1, NULL);
 
 		if (thumbRef != NULL) // Write the thumb image file out to the thumb cache directory
 		{
@@ -220,6 +226,7 @@
 		}
 
 		CGImageRelease(imageRef); // Release CGImage reference
+        CGDataConsumerRelease( consumer );
 	}
 	else // No image - so remove the placeholder object from the cache
 	{

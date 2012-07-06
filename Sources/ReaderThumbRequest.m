@@ -25,6 +25,8 @@
 
 #import "ReaderThumbRequest.h"
 #import "ReaderThumbView.h"
+#import "CGPDFDocumentCenter.h"
+#import "CGPDFDocumentProvider.h"
 
 @implementation ReaderThumbRequest
 
@@ -37,6 +39,7 @@
 @synthesize thumbPage = _thumbPage;
 @synthesize thumbSize = _thumbSize;
 @synthesize thumbName = _thumbName;
+@synthesize thumbExtension = _thumbExtension;
 @synthesize targetTag = _targetTag;
 @synthesize cacheKey = _cacheKey;
 @synthesize scale = _scale;
@@ -70,6 +73,10 @@
 
 		_thumbName = [[NSString alloc] initWithFormat:@"%07d-%04dx%04d", page, w, h];
 
+        NSString *extension = [url pathExtension];
+        id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:extension];
+        _thumbExtension = [[NSString alloc] initWithString:[docProvider tumbExtension]];
+
 		_cacheKey = [[NSString alloc] initWithFormat:@"%@+%@", _thumbName, _guid];
 
 		_targetTag = [_cacheKey hash]; _thumbView.targetTag = _targetTag;
@@ -95,6 +102,8 @@
 	[_thumbView release], _thumbView = nil;
 
 	[_thumbName release], _thumbName = nil;
+
+	[_thumbExtension release], _thumbExtension = nil;
 
 	[_cacheKey release], _cacheKey = nil;
 

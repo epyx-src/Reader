@@ -13,10 +13,11 @@
 
 + (CGPDFDocumentCenter *)sharedCenter;
 
-- (void)registerProvider:(id<CGPDFDocumentProvider>)provider forExtension:(NSString *)extension;
+- (void)registerProvider:(id<CGPDFDocumentProvider>)provider
+         forPdfExtension:(NSString *)pdfExtension
+          thumbExtension:(NSString *)thumbExtension;
 
+// Will return the default provider if a provider for the provided 'extension' is not found
 - (id<CGPDFDocumentProvider>)getProviderForExtension:(NSString *)extension;
-
-- (id<CGPDFDocumentProvider>)getDefaultProvider;
 
 @end

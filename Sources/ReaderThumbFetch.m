@@ -27,6 +27,8 @@
 #import "ReaderThumbRender.h"
 #import "ReaderThumbCache.h"
 #import "ReaderThumbView.h"
+#import "CGPDFDocumentCenter.h"
+#import "CGPDFDocumentProvider.h"
 
 #import <ImageIO/ImageIO.h>
 
@@ -87,7 +89,7 @@
 
 	NSString *cachePath = [ReaderThumbCache thumbCachePathForGUID:request.guid]; // Thumb cache path
 
-	NSString *fileName = [NSString stringWithFormat:@"%@.png", request.thumbName]; // Thumb file name
+	NSString *fileName = [NSString stringWithFormat:@"%@.%@", request.thumbName, request.thumbExtension]; // Thumb file name
 
 	return [NSURL fileURLWithPath:[cachePath stringByAppendingPathComponent:fileName]]; // File URL
 }
@@ -102,7 +104,14 @@
 
 	NSURL *thumbURL = [self thumbFileURL]; CGImageRef imageRef = NULL;
 
-	CGImageSourceRef loadRef = CGImageSourceCreateWithURL((CFURLRef)thumbURL, NULL);
+    NSString *thumbExtension = request.thumbExtension;
+    id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:thumbExtension];
+    CGDataProviderRef provider = [docProvider newCGThumbDataProviderWithURL:thumbURL];
+
+	CGImageSourceRef loadRef = NULL;
+    if ( provider ) {
+        loadRef = CGImageSourceCreateWithDataProvider(provider, NULL);
+    }
 
 	if (loadRef != NULL) // Load the existing thumb image
 	{
@@ -125,6 +134,8 @@
 
 		[thumbRender release]; // Release ReaderThumbRender object
 	}
+
+    CGDataProviderRelease(provider);
 
 	if (imageRef != NULL) // Create UIImage from CGImage and show it
 	{

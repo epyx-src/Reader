@@ -9,8 +9,8 @@
 #import "CGPDFDocumentCenter.h"
 #import "CGPDFDocumentProvider.h"
 
-#define DEFAULT_EXTENSION @"pdf"
-
+#define DEFAULT_PDF_EXTENSION @"pdf"
+#define DEFAULT_THUMB_EXTENSION @"png"
 
 @interface CGPDFDocumentCenter ()
 
@@ -42,7 +42,7 @@
         _providers = [[NSMutableDictionary alloc] init];
         // Register the default provider (for standard .pdf files)
         DefaultCGPDFDocumentProvider *defaultProvider = [[DefaultCGPDFDocumentProvider alloc] init];
-        [self registerProvider:defaultProvider forExtension:DEFAULT_EXTENSION];
+        [self registerProvider:defaultProvider forPdfExtension:DEFAULT_PDF_EXTENSION thumbExtension:DEFAULT_THUMB_EXTENSION];
         [defaultProvider release];
     }
     return self;
@@ -55,19 +55,25 @@
     [super dealloc];
 }
 
-- (void)registerProvider:(id<CGPDFDocumentProvider>)provider forExtension:(NSString *)extension
+
+- (void)registerProvider:(id<CGPDFDocumentProvider>)provider
+         forPdfExtension:(NSString *)pdfExtension
+          thumbExtension:(NSString *)thumbExtension
 {
-    [self.providers setValue:provider forKey:extension];
+    [self.providers setValue:provider forKey:pdfExtension];
+    [self.providers setValue:provider forKey:thumbExtension];
 }
 
+// Will return the default provider if a provider for the provided 'extension' is not found
 - (id<CGPDFDocumentProvider>)getProviderForExtension:(NSString *)extension
 {
-    return [self.providers valueForKey:extension];
-}
-
-- (id<CGPDFDocumentProvider>)getDefaultProvider
-{
-   return [self.providers valueForKey:DEFAULT_EXTENSION];
+    id<CGPDFDocumentProvider> provider = [self.providers valueForKey:extension];
+    if ( provider == nil ) {
+        // Unable to find the provider for the specified extension. Let's use the default one.
+        NSLog( @"CGPDFDocumentCenter: Unable to find the CGPDFDocumentProvider for extension ['%@']", extension );
+        provider = [self.providers valueForKey:DEFAULT_PDF_EXTENSION];
+    }
+    return provider;
 }
 
 @end
