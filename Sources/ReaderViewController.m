@@ -1046,4 +1046,19 @@
 	}
 }
 
+// The container view is the view added in the scroll view (ReaderContentView.theContainerView)
+- (UIView *)retrieveContainerViewForPage:(NSNumber *)page
+{
+    ReaderContentView *contentView = [contentViews objectForKey:page];
+    if ( contentView ) {
+        return [contentView retrieveContainerView];
+    }
+    return nil;
+}
+
+- (ReaderDocument *)retrieveDocument
+{
+    return document;
+}
+
 @end

@@ -324,6 +324,11 @@ static inline CGFloat ZoomScaleThatFits(CGSize target, CGSize source)
 	[super touchesMoved:touches withEvent:event]; // Message superclass
 }
 
+- (UIView *)retrieveContainerView
+{
+    return theContainerView;
+}
+
 @end
 
 #pragma mark -

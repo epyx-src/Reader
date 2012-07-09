@@ -74,4 +74,11 @@
 
 - (id)initWithReaderDocument:(ReaderDocument *)object;
 
+- (void)showDocumentPage:(NSInteger)page;
+
+// The container view is the view added in the scroll view (ReaderContentView.theContainerView)
+- (UIView *)retrieveContainerViewForPage:(NSNumber *)page;
+
+- (ReaderDocument *)retrieveDocument;
+
 @end

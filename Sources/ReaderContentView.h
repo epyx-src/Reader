@@ -64,6 +64,8 @@
 - (void)zoomDecrement;
 - (void)zoomReset;
 
+- (UIView *)retrieveContainerView;
+
 @end
 
 #pragma mark -
