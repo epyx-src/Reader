@@ -1061,4 +1061,9 @@
     return document;
 }
 
+- (ReaderMainToolbar *)retrieveMainToolbar
+{
+    return mainToolbar;
+}
+
 @end

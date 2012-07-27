@@ -81,4 +81,6 @@
 
 - (ReaderDocument *)retrieveDocument;
 
+- (ReaderMainToolbar *)retrieveMainToolbar;
+
 @end
