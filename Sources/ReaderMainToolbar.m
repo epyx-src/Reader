@@ -29,6 +29,12 @@
 
 #import <MessageUI/MessageUI.h>
 
+@interface ReaderMainToolbar ()
+
+@property (nonatomic, retain) UILabel *titleLabel;
+
+@end
+
 @implementation ReaderMainToolbar
 
 #pragma mark Constants
@@ -49,6 +55,7 @@
 #pragma mark Properties
 
 @synthesize delegate;
+@synthesize titleLabel = _titleLabel;
 
 #pragma mark ReaderMainToolbar instance methods
 
@@ -214,7 +221,10 @@
 			titleLabel.minimumFontSize = 14.0f;
 			titleLabel.text = [object.fileName stringByDeletingPathExtension];
 
-			[self addSubview:titleLabel]; [titleLabel release];
+            _titleLabel = [titleLabel retain];
+            [titleLabel release];
+
+			[self addSubview:_titleLabel];
 		}
 	}
 
@@ -227,6 +237,7 @@
 	NSLog(@"%s", __FUNCTION__);
 #endif
 
+    [_titleLabel release], _titleLabel = nil;
 	[markButton release], markButton = nil;
 
 	[markImageN release], markImageN = nil;
@@ -371,6 +382,11 @@
 #endif
 
 	[delegate tappedInToolbar:self markButton:button];
+}
+
+- (void)setTitleText:(NSString *)title
+{
+    self.titleLabel.text = title;
 }
 
 @end

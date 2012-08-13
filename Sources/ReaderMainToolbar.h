@@ -61,4 +61,6 @@
 - (void)hideToolbar;
 - (void)showToolbar;
 
+- (void)setTitleText:(NSString *)title;
+
 @end
