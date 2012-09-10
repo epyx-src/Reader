@@ -61,8 +61,8 @@
 		self.backgroundColor = [UIColor clearColor];
 
 		CAGradientLayer *layer = (CAGradientLayer *)self.layer;
-		UIColor *liteColor = [UIColor colorWithWhite:0.92f alpha:0.8f];
-		UIColor *darkColor = [UIColor colorWithWhite:0.32f alpha:0.8f];
+		UIColor *liteColor = [self liteColor];
+		UIColor *darkColor = [self darkColor];
 		layer.colors = [NSArray arrayWithObjects:(id)liteColor.CGColor, (id)darkColor.CGColor, nil];
 
 		CGRect shadowRect = self.bounds; shadowRect.origin.y += shadowRect.size.height; shadowRect.size.height = 4.0f;
@@ -82,6 +82,21 @@
 #endif
 
 	[super dealloc];
+}
+
+- (UIColor *)liteColor
+{
+    return [UIColor colorWithWhite:0.92f alpha:0.8f];
+}
+
+- (UIColor *)darkColor
+{
+    return [UIColor colorWithWhite:0.32f alpha:0.8f];
+}
+
+- (UIColor *)textColor
+{
+    return [UIColor blackColor];
 }
 
 @end

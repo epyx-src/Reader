@@ -30,6 +30,10 @@
 @private // Instance variables
 }
 
+- (UIColor *)liteColor;
+- (UIColor *)darkColor;
+- (UIColor *)textColor;
+
 @end
 
 #pragma mark -

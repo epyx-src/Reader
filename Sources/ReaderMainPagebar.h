@@ -69,6 +69,9 @@
 - (void)hidePagebar;
 - (void)showPagebar;
 
+- (UIColor *)liteColor;
+- (UIColor *)darkColor;
+
 @end
 
 #pragma mark -
