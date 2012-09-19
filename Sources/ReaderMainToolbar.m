@@ -95,6 +95,7 @@
 		UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
 
 		doneButton.frame = CGRectMake(leftButtonX, BUTTON_Y, DONE_BUTTON_WIDTH, BUTTON_HEIGHT);
+        doneButton.accessibilityIdentifier = @"doneButton";
 		[doneButton setTitle:NSLocalizedString(@"Done", @"button") forState:UIControlStateNormal];
 		[doneButton setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateNormal];
 		[doneButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:1.0f] forState:UIControlStateHighlighted];
@@ -115,6 +116,7 @@
 		UIButton *thumbsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 
 		thumbsButton.frame = CGRectMake(leftButtonX, BUTTON_Y, THUMBS_BUTTON_WIDTH, BUTTON_HEIGHT);
+        thumbsButton.accessibilityIdentifier = @"thumbsButton";
 		[thumbsButton setImage:[UIImage imageNamed:@"Reader-Thumbs.png"] forState:UIControlStateNormal];
 		[thumbsButton addTarget:self action:@selector(thumbsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 		[thumbsButton setBackgroundImage:buttonH forState:UIControlStateHighlighted];
