@@ -96,7 +96,13 @@
 
 	CGRect viewRect = self.view.bounds; // View controller's view bounds
 
-	NSString *toolbarTitle = [document.fileName stringByDeletingPathExtension];
+	NSString *toolbarTitle;
+    if (self.title) {
+        toolbarTitle = self.title;
+    }
+    else {
+        toolbarTitle = [document.fileName stringByDeletingPathExtension];
+    }
 
 	CGRect toolbarRect = viewRect; toolbarRect.size.height = TOOLBAR_HEIGHT;
 
