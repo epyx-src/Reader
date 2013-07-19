@@ -79,6 +79,7 @@
     CGImageSourceRef loadRef = NULL;
     if ( provider ) {
         loadRef = CGImageSourceCreateWithDataProvider(provider, NULL);
+        CGDataProviderRelease(provider);
     }
 	if (loadRef != NULL) // Load the existing thumb image
 	{
@@ -99,8 +100,6 @@
 			[[ReaderThumbQueue sharedInstance] addWorkOperation:thumbRender]; return; // Queue the operation
 		}
 	}
-
-    CGDataProviderRelease(provider);
 
 	if (imageRef != NULL) // Create a UIImage from a CGImage and show it
 	{

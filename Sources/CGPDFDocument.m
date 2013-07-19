@@ -37,11 +37,11 @@ CGPDFDocumentRef CGPDFDocumentCreateX(CFURLRef theURL, NSString *password)
 
 	if (theURL != NULL) // Check for non-NULL CFURLRef
 	{
-        NSString *pdfExtension = [(NSURL *)theURL pathExtension];
+        NSString *pdfExtension = [(__bridge NSURL *)theURL pathExtension];
         CGDataProviderRef dataProvider = NULL;
 
         id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:pdfExtension];
-        dataProvider = [docProvider newCGPDFDataProviderWithURL:(NSURL *)theURL];
+        dataProvider = [docProvider newCGPDFDataProviderWithURL:(__bridge NSURL *)theURL];
 
         thePDFDocRef = CGPDFDocumentCreateWithProvider( dataProvider );
 

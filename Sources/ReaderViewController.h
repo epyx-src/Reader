@@ -24,8 +24,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "ReaderDocument.h"
+#import "ReaderMainToolbar.h"
+#import "ThumbsViewController.h"
 
 @class ReaderViewController;
 
@@ -37,7 +38,7 @@
 
 @end
 
-@interface ReaderViewController : UIViewController
+@interface ReaderViewController : UIViewController <ThumbsViewControllerDelegate, ReaderMainToolbarDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, unsafe_unretained, readwrite) id <ReaderViewControllerDelegate> delegate;
 

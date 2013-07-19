@@ -182,9 +182,9 @@
 
 		CFURLRef thumbURL = (__bridge CFURLRef)[self thumbFileURL]; // Thumb cache path with PNG file name URL
 
-        NSString *pdfExtension = [(NSURL *)fileURL pathExtension];
+        NSString *pdfExtension = [(__bridge NSURL *)fileURL pathExtension];
         id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:pdfExtension];
-        CGDataConsumerRef consumer = [docProvider newCGThumbDataConsumerWithURL:(NSURL *)thumbURL];
+        CGDataConsumerRef consumer = [docProvider newCGThumbDataConsumerWithURL:(__bridge NSURL *)thumbURL];
 
 		CGImageDestinationRef thumbRef = CGImageDestinationCreateWithDataConsumer(consumer, (CFStringRef)@"public.png", 1, NULL);
 

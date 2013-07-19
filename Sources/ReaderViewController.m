@@ -25,8 +25,6 @@
 
 #import "ReaderConstants.h"
 #import "ReaderViewController.h"
-#import "ThumbsViewController.h"
-#import "ReaderMainToolbar.h"
 #import "ReaderMainPagebar.h"
 #import "ReaderContentView.h"
 #import "ReaderThumbCache.h"
@@ -34,8 +32,7 @@
 
 #import <MessageUI/MessageUI.h>
 
-@interface ReaderViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate,
-									ReaderMainToolbarDelegate, ReaderMainPagebarDelegate, ReaderContentViewDelegate, ThumbsViewControllerDelegate>
+@interface ReaderViewController () <UIScrollViewDelegate, MFMailComposeViewControllerDelegate, ReaderMainPagebarDelegate, ReaderContentViewDelegate>
 @end
 
 @implementation ReaderViewController

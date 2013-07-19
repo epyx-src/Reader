@@ -14,7 +14,7 @@
 
 @interface CGPDFDocumentCenter ()
 
-@property (nonatomic, retain) NSMutableDictionary *providers;
+@property (nonatomic, strong) NSMutableDictionary *providers;
 
 @end
 
@@ -43,18 +43,9 @@
         // Register the default provider (for standard .pdf files)
         DefaultCGPDFDocumentProvider *defaultProvider = [[DefaultCGPDFDocumentProvider alloc] init];
         [self registerProvider:defaultProvider forPdfExtension:DEFAULT_PDF_EXTENSION thumbExtension:DEFAULT_THUMB_EXTENSION];
-        [defaultProvider release];
     }
     return self;
 }
-
-- (void)dealloc
-{
-    [_providers release], _providers = nil;
-
-    [super dealloc];
-}
-
 
 - (void)registerProvider:(id<CGPDFDocumentProvider>)provider
          forPdfExtension:(NSString *)pdfExtension
