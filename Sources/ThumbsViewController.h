@@ -64,6 +64,7 @@
 @property (nonatomic, assign, readwrite) id <ThumbsViewControllerDelegate> delegate;
 
 - (id)initWithReaderDocument:(ReaderDocument *)object;
+- (void)createMainToolBarwithTitle:(NSString *)title;
 
 @end
 

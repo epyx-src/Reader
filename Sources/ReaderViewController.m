@@ -851,6 +851,7 @@
 	ThumbsViewController *thumbsViewController = [[ThumbsViewController alloc] initWithReaderDocument:document];
 
 	thumbsViewController.delegate = self; thumbsViewController.title = self.title;
+    [thumbsViewController createMainToolBarwithTitle:self.title];
 
 	thumbsViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 	thumbsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
