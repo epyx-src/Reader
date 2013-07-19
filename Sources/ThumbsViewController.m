@@ -93,10 +93,13 @@
 	NSAssert(!(document == nil), @"ReaderDocument == nil");
 
 	self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+}
 
-	CGRect viewRect = self.view.bounds; // View controller's view bounds
+- (void)createMainToolBarwithTitle:(NSString *)title
+{
+    CGRect viewRect = self.view.bounds; // View controller's view bounds
 
-	NSString *toolbarTitle = [document.fileName stringByDeletingPathExtension];
+	NSString *toolbarTitle = [title stringByDeletingPathExtension];
 
 	CGRect toolbarRect = viewRect; toolbarRect.size.height = TOOLBAR_HEIGHT;
 
@@ -106,7 +109,7 @@
 
 	[self.view addSubview:mainToolbar];
 
-	CGRect thumbsRect = viewRect; UIEdgeInsets insets = UIEdgeInsetsZero;
+    CGRect thumbsRect = viewRect; UIEdgeInsets insets = UIEdgeInsetsZero;
 
 	if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 	{
