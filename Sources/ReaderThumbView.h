@@ -1,9 +1,9 @@
 //
 //	ReaderThumbView.h
-//	Reader v2.5.4
+//	Reader v2.6.1
 //
 //	Created by Julius Oklamcak on 2011-09-01.
-//	Copyright © 2011-2012 Julius Oklamcak. All rights reserved.
+//	Copyright © 2011-2013 Julius Oklamcak. All rights reserved.
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -27,18 +27,12 @@
 
 @interface ReaderThumbView : UIView
 {
-@private // Instance variables
-
-	NSUInteger _targetTag;
-
-	NSOperation *_operation;
-
 @protected // Instance variables
 
 	UIImageView *imageView;
 }
 
-@property (assign, readwrite) NSOperation *operation;
+@property (atomic, strong, readwrite) NSOperation *operation;
 
 @property (nonatomic, assign, readwrite) NSUInteger targetTag;
 

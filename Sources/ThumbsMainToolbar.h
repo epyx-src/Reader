@@ -1,9 +1,9 @@
 //
 //	ThumbsMainToolbar.h
-//	Reader v2.5.4
+//	Reader v2.6.0
 //
 //	Created by Julius Oklamcak on 2011-09-01.
-//	Copyright © 2011-2012 Julius Oklamcak. All rights reserved.
+//	Copyright © 2011-2013 Julius Oklamcak. All rights reserved.
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -34,17 +34,13 @@
 @required // Delegate protocols
 
 - (void)tappedInToolbar:(ThumbsMainToolbar *)toolbar doneButton:(UIButton *)button;
-
 - (void)tappedInToolbar:(ThumbsMainToolbar *)toolbar showControl:(UISegmentedControl *)control;
 
 @end
 
 @interface ThumbsMainToolbar : UIXToolbarView
-{
-@private // Instance variables
-}
 
-@property (nonatomic, assign, readwrite) id <ThumbsMainToolbarDelegate> delegate;
+@property (nonatomic, unsafe_unretained, readwrite) id <ThumbsMainToolbarDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 

@@ -1,9 +1,9 @@
 //
 //	ReaderContentView.h
-//	Reader v2.5.4
+//	Reader v2.6.0
 //
 //	Created by Julius Oklamcak on 2011-07-01.
-//	Copyright © 2011-2012 Julius Oklamcak. All rights reserved.
+//	Copyright © 2011-2013 Julius Oklamcak. All rights reserved.
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -40,25 +40,14 @@
 @end
 
 @interface ReaderContentView : UIScrollView <UIScrollViewDelegate>
-{
-@private // Instance variables
 
-	ReaderContentPage *theContentView;
-
-	ReaderContentThumb *theThumbView;
-
-	UIView *theContainerView;
-
-	CGFloat zoomAmount;
-}
-
-@property (nonatomic, assign, readwrite) id <ReaderContentViewDelegate> message;
+@property (nonatomic, unsafe_unretained, readwrite) id <ReaderContentViewDelegate> message;
 
 - (id)initWithFrame:(CGRect)frame fileURL:(NSURL *)fileURL page:(NSUInteger)page password:(NSString *)phrase;
 
 - (void)showPageThumb:(NSURL *)fileURL page:(NSInteger)page password:(NSString *)phrase guid:(NSString *)guid;
 
-- (id)singleTap:(UITapGestureRecognizer *)recognizer;
+- (id)processSingleTap:(UITapGestureRecognizer *)recognizer;
 
 - (void)zoomIncrement;
 - (void)zoomDecrement;
@@ -75,8 +64,5 @@
 //
 
 @interface ReaderContentThumb : ReaderThumbView
-{
-@private // Instance variables
-}
 
 @end
