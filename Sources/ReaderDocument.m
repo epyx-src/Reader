@@ -289,7 +289,7 @@
 {
 	CFURLRef docURLRef = (__bridge CFURLRef)self.fileURL; // File URL
 
-	CGPDFDocumentRef thePDFDocRef = CGPDFDocumentCreateWithURL(docURLRef);
+	CGPDFDocumentRef thePDFDocRef = CGPDFDocumentCreateX(docURLRef, _password);
 
 	if (thePDFDocRef != NULL) // Get the number of pages in the document
 	{
