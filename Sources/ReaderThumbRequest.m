@@ -1,9 +1,9 @@
 //
 //	ReaderThumbRequest.m
-//	Reader v2.5.4
+//	Reader v2.6.1
 //
 //	Created by Julius Oklamcak on 2011-09-01.
-//	Copyright © 2011-2012 Julius Oklamcak. All rights reserved.
+//	Copyright © 2011-2013 Julius Oklamcak. All rights reserved.
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,27 @@
 #import "CGPDFDocumentProvider.h"
 
 @implementation ReaderThumbRequest
+{
+	NSURL *_fileURL;
+    
+	NSString *_guid;
+    
+	NSString *_password;
+    
+	NSString *_cacheKey;
+    
+	NSString *_thumbName;
+    
+	ReaderThumbView *_thumbView;
+    
+	NSUInteger _targetTag;
+    
+	NSInteger _thumbPage;
+    
+	CGSize _thumbSize;
+    
+	CGFloat _scale;
+}
 
 #pragma mark Properties
 
@@ -46,68 +67,37 @@
 
 #pragma mark ReaderThumbRequest class methods
 
-+ (id)forView:(ReaderThumbView *)view fileURL:(NSURL *)url password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size
++ (id)newForView:(ReaderThumbView *)view fileURL:(NSURL *)url password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size
 {
-#ifdef DEBUGX
-	NSLog(@"%s", __FUNCTION__);
-#endif
-
-	return [[[ReaderThumbRequest alloc] initWithView:view fileURL:url password:phrase guid:guid page:page size:size] autorelease];
+	return [[ReaderThumbRequest alloc] initWithView:view fileURL:url password:phrase guid:guid page:page size:size];
 }
 
 #pragma mark ReaderThumbRequest instance methods
 
 - (id)initWithView:(ReaderThumbView *)view fileURL:(NSURL *)url password:(NSString *)phrase guid:(NSString *)guid page:(NSInteger)page size:(CGSize)size
 {
-#ifdef DEBUGX
-	NSLog(@"%s", __FUNCTION__);
-#endif
-
 	if ((self = [super init])) // Initialize object
 	{
 		NSInteger w = size.width; NSInteger h = size.height;
-
-		_thumbView = [view retain]; _thumbPage = page; _thumbSize = size;
-
+        
+		_thumbView = view; _thumbPage = page; _thumbSize = size;
+        
 		_fileURL = [url copy]; _password = [phrase copy]; _guid = [guid copy];
-
+        
 		_thumbName = [[NSString alloc] initWithFormat:@"%07d-%04dx%04d", page, w, h];
-
+        
         NSString *extension = [url pathExtension];
         id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:extension];
         _thumbExtension = [[NSString alloc] initWithString:[docProvider tumbExtension]];
 
 		_cacheKey = [[NSString alloc] initWithFormat:@"%@+%@", _thumbName, _guid];
-
+        
 		_targetTag = [_cacheKey hash]; _thumbView.targetTag = _targetTag;
-
+        
 		_scale = [[UIScreen mainScreen] scale]; // Thumb screen scale
 	}
-
+    
 	return self;
-}
-
-- (void)dealloc
-{
-#ifdef DEBUGX
-	NSLog(@"%s", __FUNCTION__);
-#endif
-
-	[_guid release], _guid = nil;
-
-	[_fileURL release], _fileURL = nil;
-
-	[_password release], _password = nil;
-
-	[_thumbView release], _thumbView = nil;
-
-	[_thumbName release], _thumbName = nil;
-
-	[_thumbExtension release], _thumbExtension = nil;
-
-	[_cacheKey release], _cacheKey = nil;
-
-	[super dealloc];
 }
 
 @end
