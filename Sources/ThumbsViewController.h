@@ -1,9 +1,9 @@
 //
 //	ThumbsViewController.h
-//	Reader v2.5.4
+//	Reader v2.6.0
 //
 //	Created by Julius Oklamcak on 2011-09-01.
-//	Copyright © 2011-2012 Julius Oklamcak. All rights reserved.
+//	Copyright © 2011-2013 Julius Oklamcak. All rights reserved.
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@
 #import "ThumbsMainToolbar.h"
 #import "ReaderThumbsView.h"
 
-@class ThumbsViewController;
 @class ReaderDocument;
+@class ThumbsViewController;
 
 @protocol ThumbsViewControllerDelegate <NSObject>
 
@@ -41,27 +41,9 @@
 
 @end
 
-@interface ThumbsViewController : UIViewController <ThumbsMainToolbarDelegate, ReaderThumbsViewDelegate>
-{
-@private // Instance variables
+@interface ThumbsViewController : UIViewController
 
-	ReaderDocument *document;
-
-	ThumbsMainToolbar *mainToolbar;
-
-	ReaderThumbsView *theThumbsView;
-
-	NSMutableArray *bookmarked;
-
-	BOOL updateBookmarked;
-
-	CGPoint thumbsOffset;
-	CGPoint markedOffset;
-
-	BOOL showBookmarked;
-}
-
-@property (nonatomic, assign, readwrite) id <ThumbsViewControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained, readwrite) id <ThumbsViewControllerDelegate> delegate;
 
 - (id)initWithReaderDocument:(ReaderDocument *)object;
 
@@ -74,21 +56,6 @@
 //
 
 @interface ThumbsPageThumb : ReaderThumbView
-{
-@private // Instance variables
-
-	UIView *backView;
-
-	UIView *maskView;
-
-	UILabel *textLabel;
-
-	UIImageView *bookMark;
-
-	CGSize maximumSize;
-
-	CGRect defaultRect;
-}
 
 - (CGSize)maximumContentSize;
 

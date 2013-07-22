@@ -22,17 +22,17 @@
 
 - (CGDataProviderRef)newCGPDFDataProviderWithURL:(NSURL *)url;
 {
-    return CGDataProviderCreateWithURL( (CFURLRef)url );
+    return CGDataProviderCreateWithURL( (__bridge CFURLRef)url );
 }
 
 - (CGDataProviderRef)newCGThumbDataProviderWithURL:(NSURL *)url
 {
-    return CGDataProviderCreateWithURL( (CFURLRef)url );
+    return CGDataProviderCreateWithURL( (__bridge CFURLRef)url );
 }
 
 - (CGDataConsumerRef)newCGThumbDataConsumerWithURL:(NSURL *)url
 {
-    return CGDataConsumerCreateWithURL( (CFURLRef)url );
+    return CGDataConsumerCreateWithURL( (__bridge CFURLRef)url );
 }
 
 @end
