@@ -55,6 +55,9 @@
 #define PRINT_BUTTON_WIDTH 40.0f
 #define EMAIL_BUTTON_WIDTH 40.0f
 #define MARK_BUTTON_WIDTH 40.0f
+#define ANNOTATION_BUTTON_WIDTH 40.0f
+#define SHOW_HIDE_ANNOTATION_BUTTON_WIDTH 40.0f
+#define RECENT_BUTTON_WIDTH 40.0f
 
 #define TITLE_HEIGHT 28.0f
 
@@ -208,6 +211,15 @@
 
 #endif // end of READER_ENABLE_PRINT Option
 
+        //Add annotation button
+        titleX += (ANNOTATION_BUTTON_WIDTH + BUTTON_SPACE); titleWidth -= (ANNOTATION_BUTTON_WIDTH + BUTTON_SPACE);
+        
+        //Add show annotation button
+        titleWidth -= (SHOW_HIDE_ANNOTATION_BUTTON_WIDTH + BUTTON_SPACE);
+        
+        //Add recent button
+        titleWidth -= (RECENT_BUTTON_WIDTH + BUTTON_SPACE);
+        
 		if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 		{
 			CGRect titleRect = CGRectMake(titleX, BUTTON_Y, titleWidth, TITLE_HEIGHT);
