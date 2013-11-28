@@ -598,26 +598,25 @@
 			{
 				if ([target isKindOfClass:[NSURL class]]) // Open a URL
 				{
-					NSURL *url = (NSURL *)target; // Cast to a NSURL object
+					self.url = (NSURL *)target; // Cast to a NSURL object
 
-					if (url.scheme == nil) // Handle a missing URL scheme
+					if (self.url.scheme == nil) // Handle a missing URL scheme
 					{
-						NSString *www = url.absoluteString; // Get URL string
+						NSString *www = self.url.absoluteString; // Get URL string
 
 						if ([www hasPrefix:@"www"] == YES) // Check for 'www' prefix
 						{
 							NSString *http = [NSString stringWithFormat:@"http://%@", www];
 
-							url = [NSURL URLWithString:http]; // Proper http-based URL
+							self.url = [NSURL URLWithString:http]; // Proper http-based URL
 						}
 					}
 
-					if ([[UIApplication sharedApplication] openURL:url] == NO)
-					{
-						#ifdef DEBUG
-							NSLog(@"%s '%@'", __FUNCTION__, url); // Bad or unknown URL
-						#endif
-					}
+					NSString *ok = NSLocalizedStringFromTable(@"OK", @"Application", nil);
+                    NSString *cancel = NSLocalizedStringFromTable(@"Cancel", @"Application", nil);
+                    NSString *alertTitle = NSLocalizedStringFromTable(@"OpenLinkAlertTitle", @"Application", nil);
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle message:nil delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
+                    [alert show];
 				}
 				else // Not a URL, so check for other possible object type
 				{
@@ -713,6 +712,22 @@
 			[self decrementPageNumber]; return;
 		}
 	}
+}
+
+#pragma mark UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex;{
+    // the user clicked OK
+    if (buttonIndex != 0)
+    {
+        if ([[UIApplication sharedApplication] openURL:self.url] == NO)
+        {
+#ifdef DEBUG
+            NSLog(@"%s '%@'", __FUNCTION__, self.url); // Bad or unknown URL
+#endif
+        }
+        
+    }
 }
 
 #pragma mark ReaderContentViewDelegate methods
