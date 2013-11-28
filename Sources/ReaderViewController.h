@@ -38,9 +38,10 @@
 
 @end
 
-@interface ReaderViewController : UIViewController <ThumbsViewControllerDelegate, ReaderMainToolbarDelegate, UIGestureRecognizerDelegate>
+@interface ReaderViewController : UIViewController <ThumbsViewControllerDelegate, ReaderMainToolbarDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak, readwrite) id <ReaderViewControllerDelegate> delegate;
+@property (nonatomic, strong) NSURL *url;
 
 - (id)initWithReaderDocument:(ReaderDocument *)object;
 
