@@ -226,7 +226,7 @@
 
 			_titleLabel = [[UILabel alloc] initWithFrame:titleRect];
 
-			_titleLabel.textAlignment = UITextAlignmentCenter;
+			_titleLabel.textAlignment = NSTextAlignmentCenter;
 			_titleLabel.font = [UIFont systemFontOfSize:19.0f];
 			_titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 			_titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
@@ -235,7 +235,7 @@
 			_titleLabel.backgroundColor = [UIColor clearColor];
 			_titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
 			_titleLabel.adjustsFontSizeToFitWidth = YES;
-			_titleLabel.minimumFontSize = 14.0f;
+			_titleLabel. minimumScaleFactor = 14.0f/[UIFont labelFontSize];
 			_titleLabel.text = [object.fileName stringByDeletingPathExtension];
 
 			[self addSubview:_titleLabel];
