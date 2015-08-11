@@ -84,7 +84,7 @@
         
 		_fileURL = [url copy]; _password = [phrase copy]; _guid = [guid copy];
         
-		_thumbName = [[NSString alloc] initWithFormat:@"%07d-%04dx%04d", page, w, h];
+		_thumbName = [[NSString alloc] initWithFormat:@"%07ld-%04ldx%04ld", (long)page, (long)w, (long)h];
         
         NSString *extension = [url pathExtension];
         id<CGPDFDocumentProvider> docProvider = [[CGPDFDocumentCenter sharedCenter] getProviderForExtension:extension];
